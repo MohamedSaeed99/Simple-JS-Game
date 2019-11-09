@@ -18,26 +18,19 @@ let good = {
 
 //check for holding down the arrow button
 let movement =() =>{
-    var pressed = false
     document.addEventListener('keydown', function(logKey){
-        if(!pressed){
-            if(logKey.keyCode == 38){
-                player.y-=7;
-            }
-            else if(logKey.keyCode == 40){
-                player.y+=7;
-            }
-            else if(logKey.keyCode == 39){
-                player.x+=7;
-            }
-            else if(logKey.keyCode == 37){
-                player.x-=7;
-            }
-            pressed = true;
+        if(logKey.keyCode == 38){
+            player.y-=7;
         }
-    });
-    document.addEventListener('keyup', function(){
-        pressed = false;
+        else if(logKey.keyCode == 40){
+            player.y+=7;
+        }
+        else if(logKey.keyCode == 39){
+            player.x+=7;
+        }
+        else if(logKey.keyCode == 37){
+            player.x-=7;
+        }
     });
 }
 
@@ -60,16 +53,11 @@ window.onload = function() {
     //use requestAnimation window.requestanimationframe("Function to run")
     var game = () => {
         ctx.clearRect(0, 0, c.width, c.height);
+
         if(good.y == 0){
-            var randStart = randomHeight(c.width-50, harm.y);
-            ctx.drawImage(good.image, randStart, 0, 50, 20);
-            good.x = randStart;
+
         }
-        if(harm.y == 0){
-            var randStart=randomHeight(c.width-50, good.y);
-            ctx.drawImage(harm.image, randStart, 0, 50, 20);
-            harm.x = randStart;
-        }
+
         good.y+=1;
         harm.y+=1;
 
