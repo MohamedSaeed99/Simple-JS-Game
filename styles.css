@@ -1,4 +1,6 @@
 #canvas{
+    border: solid;
+    border-color: red;
     height: 400px;
     width: 400px;
 }
