@@ -1,6 +1,6 @@
 #canvas{
     border: solid;
     border-color: red;
-    height: 400px;
-    width: 400px;
+    height: 80vh;
+    width: 80vw;
 }

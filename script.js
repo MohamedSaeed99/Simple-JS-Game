@@ -4,16 +4,9 @@ let player = {
     image: document.getElementById("player")
 }
 
-let harm = {
-    x: 0,
-    y: 0,
-    image: document.getElementById("harm")
-}
-
-let good = {
-    x: 0,
-    y: 0,
-    image: document.getElementById("good")
+let game = {
+    score: 0,
+    lives: 7
 }
 
 //check for holding down the arrow button
@@ -34,18 +27,63 @@ let movement =() =>{
     });
 }
 
-let randomHeight = (maxWidth, collision) =>{
+let randomHeight = (maxWidth, items, current) =>{
     var randVal = Math.floor(Math.random() * Math.floor(maxWidth))
-    console.log(randVal - collision);
+    for(var i =0; i<items.length; i ++){
+        if(i == current){
+            continue;
+        }
+        if(Math.abs(randVal-(items[i].x)-25) <= 25){
+            randomHeight(maxWidth, items, current);
+            //randVal = Math.floor(Math.random() * Math.floor(maxWidth))
+        }
+    }
     return randVal;
 }
 
+let items = [{
+    good: false,
+    x: 0,
+    y: 0,
+    image: document.getElementById("harm")
+}, {
+    good: false,
+    x: 0,
+    y: 0,
+    image: document.getElementById("harm")
+}, {
+    good: true,
+    x: 0,
+    y: 0,
+    image: document.getElementById("good")
+}, {
+    good: true,
+    x: 0,
+    y: 0,
+    image: document.getElementById("good")
+}]
+
+
+let collision = (items, current) =>{
+    if(player.x < items[current].x + 25 && 25 + player.x > items[current].x && player.y < items[current].y + 15 && 15 + player.y > items[current].y){
+        if(items[current].good){
+            console.log('good');
+            game.score += 100
+        }
+        else{
+            console.log(game.lives);
+            game.lives -= 1;
+
+        }
+    }
+}
 window.onload = function() {
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
-    ctx.drawImage(player.image, c.width/2, c.height-20, 50, 20);
+    ctx.drawImage(player.image, c.width/2, c.height-20, 25, 15);
     player.x = c.width/2;
     player.y = c.height-20;
+
 
     //call this once
     movement();
@@ -53,26 +91,50 @@ window.onload = function() {
     //use requestAnimation window.requestanimationframe("Function to run")
     var game = () => {
         ctx.clearRect(0, 0, c.width, c.height);
+    
 
-        if(good.y == 0){
-
+        //sets game boundaries for player
+        if(player.x > c.width-25){
+            player.x = c.width-25;
+        }
+        else if(player.x < 0){
+            player.x = 0
+        }
+        if(player.y < 0){
+            player.y = 0;
+        }
+        else if(player.y > c.height-15){
+            player.y = c.height-15;
         }
 
-        good.y+=1;
-        harm.y+=1;
+        //draws updated items
+        for(var i = 0; i < items.length; i++){
+            
+            //sets boundaries of items
+            if(items[i].y >= (c.height-15)){
+                items[i].y = 0;
+            }
 
-        ctx.drawImage(harm.image, harm.x, harm.y, 50, 20);
-        ctx.drawImage(good.image, good.x, good.y, 50, 20);
+            if(items[i].y == 0){
+                // items[i].x = Math.floor(Math.random() * Math.floor(c.width-25))
+                items[i].x = randomHeight(c.width-25, items, i);
+            }
+            //moves the items
+            items[i].y += 1
 
-        if(good.y >= (c.height-20)){
-            good.y = 0;
+            collision(items, i)
+
+            ctx.drawImage(items[i].image, items[i].x, items[i].y, 25, 15);
         }
-        if(harm.y >= (c.height-20)){
-            harm.y = 0;
-        }
-        ctx.drawImage(player.image, player.x, player.y, 50, 20);
 
+        ctx.drawImage(player.image, player.x, player.y, 25, 15);
+
+        if(game.lives <= 0 ){
+            this.console.log("Game Over")
+        }
+        else{
         window.requestAnimationFrame(game);
+        }
     }
 
     window.requestAnimationFrame(game);
