@@ -27,7 +27,7 @@ let movement =() =>{
     });
 }
 
-let randomHeight = (maxWidth, items, current) =>{
+let randomWidth = (maxWidth, items, current) =>{
     var randVal = Math.floor(Math.random() * Math.floor(maxWidth))
     for(var i =0; i<items.length; i ++){
         if(i == current){
@@ -41,25 +41,29 @@ let randomHeight = (maxWidth, items, current) =>{
     return randVal;
 }
 
+let randomHeight = () => {
+    var randVal = Math.floor(Math.random() * Math.floor(-50))
+    return randVal;
+}
 let items = [{
     good: false,
     x: 0,
-    y: 0,
+    y: randomHeight(),
     image: document.getElementById("harm")
 }, {
     good: false,
     x: 0,
-    y: 0,
+    y: randomHeight(),
     image: document.getElementById("harm")
 }, {
     good: true,
     x: 0,
-    y: 0,
+    y: randomHeight(),
     image: document.getElementById("good")
 }, {
     good: true,
     x: 0,
-    y: 0,
+    y: randomHeight(),
     image: document.getElementById("good")
 }]
 
@@ -91,7 +95,6 @@ window.onload = function() {
     //use requestAnimation window.requestanimationframe("Function to run")
     var game = () => {
         ctx.clearRect(0, 0, c.width, c.height);
-    
 
         //sets game boundaries for player
         if(player.x > c.width-25){
@@ -109,15 +112,14 @@ window.onload = function() {
 
         //draws updated items
         for(var i = 0; i < items.length; i++){
-            
             //sets boundaries of items
             if(items[i].y >= (c.height-15)){
-                items[i].y = 0;
+                items[i].y = randomHeight();
             }
-
-            if(items[i].y == 0){
+            
+            if(items[i].y < -15){
                 // items[i].x = Math.floor(Math.random() * Math.floor(c.width-25))
-                items[i].x = randomHeight(c.width-25, items, i);
+                items[i].x = randomWidth(c.width-25, items, i);
             }
             //moves the items
             items[i].y += 1
