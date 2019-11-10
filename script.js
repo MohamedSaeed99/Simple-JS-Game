@@ -65,6 +65,31 @@ let items = [{
     x: 0,
     y: randomHeight(),
     image: document.getElementById("good")
+},{
+    good: true,
+    x: 0,
+    y: randomHeight(),
+    image: document.getElementById("good")
+},{
+    good: true,
+    x: 0,
+    y: randomHeight(),
+    image: document.getElementById("good")
+},{
+    good: true,
+    x: 0,
+    y: randomHeight(),
+    image: document.getElementById("good")
+},{
+    good: false,
+    x: 0,
+    y: randomHeight(),
+    image: document.getElementById("harm")
+},{
+    good: false,
+    x: 0,
+    y: randomHeight(),
+    image: document.getElementById("harm")
 }]
 
 
