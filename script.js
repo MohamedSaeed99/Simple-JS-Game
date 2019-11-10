@@ -9,6 +9,7 @@ let game = {
     lives: 7
 }
 
+
 //check for holding down the arrow button
 let movement =() =>{
     document.addEventListener('keydown', function(logKey){
@@ -29,13 +30,13 @@ let movement =() =>{
 
 let randomWidth = (maxWidth, items, current) =>{
     var randVal = Math.floor(Math.random() * Math.floor(maxWidth))
-    for(var i =0; i<items.length; i ++){
-        if(i == current){
+    for(var i = 0; i < items.length; i++){
+        if(current == i){
             continue;
         }
-        if(Math.abs(randVal-(items[i].x)-25) <= 25){
-            randomHeight(maxWidth, items, current);
-            //randVal = Math.floor(Math.random() * Math.floor(maxWidth))
+        if(Math.abs(randVal-items[i].x) <= 25){
+            i = 0;
+            randVal = Math.floor(Math.random() * Math.floor(maxWidth));
         }
     }
     return randVal;
@@ -45,6 +46,7 @@ let randomHeight = () => {
     var randVal = Math.floor(Math.random() * Math.floor(-50))
     return randVal;
 }
+
 let items = [{
     good: false,
     x: 0,
@@ -60,52 +62,43 @@ let items = [{
     x: 0,
     y: randomHeight(),
     image: document.getElementById("good")
-}, {
-    good: true,
-    x: 0,
-    y: randomHeight(),
-    image: document.getElementById("good")
 },{
     good: true,
     x: 0,
     y: randomHeight(),
     image: document.getElementById("good")
-},{
-    good: true,
-    x: 0,
-    y: randomHeight(),
-    image: document.getElementById("good")
-},{
-    good: true,
-    x: 0,
-    y: randomHeight(),
-    image: document.getElementById("good")
-},{
-    good: false,
-    x: 0,
-    y: randomHeight(),
-    image: document.getElementById("harm")
-},{
-    good: false,
-    x: 0,
-    y: randomHeight(),
-    image: document.getElementById("harm")
 }]
 
-
 let collision = (items, current) =>{
-    if(player.x < items[current].x + 25 && 25 + player.x > items[current].x && player.y < items[current].y + 15 && 15 + player.y > items[current].y){
+    if(player.x < items[current].x + 25 && 25 + player.x > items[current].x
+        && player.y < items[current].y + 15 && 15 + player.y > items[current].y){
         if(items[current].good){
+            items.splice(current, 1);
+            items.push({
+                good: true,
+                x: 0,
+                y: randomHeight(),
+                image: document.getElementById("good")
+            })
             console.log('good');
-            game.score += 100
+            game.score += 100;
         }
         else{
+            items.splice(current, 1);
+            items.push({
+                good: false,
+                x: 0,
+                y: randomHeight(),
+                image: document.getElementById("harm")
+            })
             console.log(game.lives);
             game.lives -= 1;
 
         }
     }
 }
+
+
 window.onload = function() {
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
