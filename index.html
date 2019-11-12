@@ -5,14 +5,24 @@
         <link rel="stylesheet" href="./styles.css">
     </head>
     <body>
-        <img id='harm' src='./Ham.png' alt='harmful object' width=25>
-        <img id='good' src='./Gym.png' alt='beneficial player' width=25>
-        <img id='player' src='./happy.jpg' alt='player' width=25>
-        <img id='heart' src='./heart.png' alt='lives' width=5>
+        <img id='harm' src='./Ham.png' alt='harmful object' width=25 style="display:none;">
+        <img id='good' src='./Gym.png' alt='beneficial player' width=25 style="display:none;">
+        <img id='player' src='./happy.jpg' alt='player' width=25 style="display:none;">
+        <img id='heart' src='./heart.png' alt='lives' width=5 style="display:none;">
+        <div id='center'>
+            <canvas id='canvas'>
+            </canvas>
         
-        <p>canvas</p>
-        <canvas id='canvas'>
-        </canvas>
+        <div id='directional'>
+            <p><i class="arrow up"></i></p>
+            <div id='LR'>
+                <p><i class="arrow left"></i></p>
+                <p><i class="arrow right"></i></p>
+            </div>
+            <p><i class="arrow down"></i></p>
+        </div>
+        </div>
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src='./script.js'></script>
 </html>

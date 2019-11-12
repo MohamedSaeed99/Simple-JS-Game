@@ -11,6 +11,20 @@ let gameStat = {
 
 let level = 0;
 
+let mobileMovement = () => {
+    $(".left").on('click', function(){
+        player.x -=7;
+    });
+    $(".up").on('click', function(){
+        player.y -=7;
+    });
+    $(".right").on('click', function(){
+        player.x +=7;
+    });
+    $(".down").on('click', function(){
+        player.y +=7;
+    });
+}
 //check for holding down the arrow button
 let movement =() =>{
     document.addEventListener('keydown', function(logKey){
@@ -140,6 +154,7 @@ window.onload = function() {
 
     //call this once
     movement();
+    mobileMovement();
 
     //use requestAnimation window.requestanimationframe("Function to run")
     var game = () => {
@@ -209,7 +224,7 @@ window.onload = function() {
         //checks end game
         if(gameStat.lives.length == 0){
             ctx.font = "40px Arial";
-            ctx.fillText('GAME OVER', c.width/2, c.height/2);
+            ctx.fillText('GAME OVER', 30, c.height/2);
         }
         else{
             window.requestAnimationFrame(game);
