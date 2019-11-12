@@ -77,12 +77,6 @@ let items = [{
     y: randomHeight(),
     speed: randomSpeed(level),
     image: document.getElementById("harm")
-},{
-    good: false,
-    x: 0,
-    y: randomHeight(),
-    speed: randomSpeed(level),
-    image: document.getElementById("harm")
 }, {
     good: true,
     x: 0,
@@ -112,22 +106,6 @@ let collision = (items, current) =>{
         && player.y < items[current].y + 15 && 15 + player.y > items[current].y){
         if(items[current].good){
             items.splice(current, 1);
-            if(levelComplete(items)){
-                console.log("complete")
-                level++; 
-                if(level > 4){
-                    level = 4;
-                }
-                for(var w = 0; w < 3; w++){  
-                    items.push({
-                        good: true,
-                        x: 0,
-                        y: randomHeight(),
-                        speed: randomSpeed(level),
-                        image: document.getElementById("good")
-                    })
-                }
-            }
             gameStat.score += 100;
         }
         else{
@@ -149,10 +127,11 @@ let collision = (items, current) =>{
 window.onload = function() {
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
+    ctx.font = "10px Arial";
     ctx.drawImage(player.image, c.width/2, c.height-20, 25, 15);
     player.x = c.width/2;
     player.y = c.height-20;
-    var j = 1
+    var j = 1;
     this.console.log(gameStat.lives[0])
     for(var i = 0; i < gameStat.lives.length; i++){
         ctx.drawImage(gameStat.lives[i], j*8, 5, 10, 5);
@@ -165,6 +144,9 @@ window.onload = function() {
     //use requestAnimation window.requestanimationframe("Function to run")
     var game = () => {
         ctx.clearRect(0, 0, c.width, c.height);
+
+        ctx.fillText('Score: ' + gameStat.score, c.width-60, 10);
+        ctx.fillText('Level: ' + level, c.width-60, 20);
 
         //sets game boundaries for player
         if(player.x > c.width-25){
@@ -204,17 +186,34 @@ window.onload = function() {
             }
         }
 
+        //Checks if level is complete and moves to next level with increased speed
+        if(levelComplete(items)){
+            level++; 
+            for(var w = 0; w < 3; w++){  
+                items.push({
+                    good: true,
+                    x: 0,
+                    y: randomHeight(),
+                    speed: randomSpeed(level),
+                    image: document.getElementById("good")
+                })
+            }
+            livesMissing = Math.abs(gameStat.lives.length-3)
+            for(var i = 0; i< livesMissing; i++){
+                gameStat.lives.push(document.getElementById("heart"))
+            }
+        }
+
         ctx.drawImage(player.image, player.x, player.y, 25, 15);
 
-        // if(gameStat.lives.length == 0){
-        //     this.console.log('stop')
-        //     cancelAnimationFrame(animation);
-        //     animation = this.undefined
-        // }
-
-        var animation = window.requestAnimationFrame(game);
-        
+        //checks end game
+        if(gameStat.lives.length == 0){
+            ctx.font = "40px Arial";
+            ctx.fillText('GAME OVER', c.width/2, c.height/2);
+        }
+        else{
+            window.requestAnimationFrame(game);
+        }
     }
-
     var animation = requestAnimationFrame(game);
 }
