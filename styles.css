@@ -6,7 +6,9 @@
     justify-content: center;
     align-items: center;
 }
-
+img{
+  width: 10px;
+}
 #canvas{
     border: solid;
     border-color: red;

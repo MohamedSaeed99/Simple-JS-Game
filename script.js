@@ -217,7 +217,7 @@ window.onload = function() {
             }
             
             if(items[i].y < -70){
-                items[i].x = randomWidth(c.width-40, items, i);
+                items[i].x = randomWidth(c.width-100, items, i);
                 items[i].speed = randomSpeed(level)
             }
             //moves the items
